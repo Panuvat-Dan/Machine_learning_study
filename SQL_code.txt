@@ -1,0 +1,60 @@
+/* Create database /
+
+CREATE TABLE PUBLIC. "Mydata"(Age int,BusinessTravel varchar(100),DailyRate int,Department varchar(100),DistanceFromHome int,
+Education varchar(100),EducationField varchar(100),EmployeeCount int,EmployeeNumber int,EnvironmentSatisfaction int,
+Gender varchar(100),HourlyRate int,JobInvolvement int,JobLevel int,JobRole varchar(100),JobSatisfaction int,
+MaritalStatus varchar(100),MonthlyIncome int,MonthlyRate int,NumCompaniesWorked int,Over18 varchar(100),
+OverTime varchar(100),PercentSalaryHike int,PerformanceRating int,RelationshipSatisfaction int,
+StandardHours int,StockOptionLevel int,TotalWorkingYears int,TrainingTimesLastYear int,
+WorkLifeBalance int,YearsAtCompany int,YearsInCurrentRole int,YearsSinceLastPromotion int,
+YearsWithCurrManager int,Attrition varchar(100))
+
+/* Import IMB-dataset to database-sever /
+
+COPY Public."MyData" From 'C:\Users\sam\Desktop\IBM Dataset\IBM_sample_employee_dataset_csv.csv' DELIMITER ',' CSV HEADER ;
+
+/* First query to find insight/
+
+SELECT AVG(TotalWorkingYears-YearsWithCurrManager) AS AVG_year_tobe_manager,count(attrition) as attrition
+FROM PUBLIC."MyData"
+WHERE attrition = 'Yes'
+GROUP BY TotalWorkingYears,YearsWithCurrManager
+ORDER BY AVG(TotalWorkingYears-YearsWithCurrManager)
+
+/* Second query to find insight/
+
+SELECT count(attrition) as Count_attrition,
+	case when worklifebalance = '1' THEN 'Bad' 
+	when worklifebalance = '2' THEN 'Good'
+	when worklifebalance = '3' THEN 'Better'
+	when worklifebalance = '4' THEN 'Best' END AS clustering_worklifebalance
+	FROM PUBLIC."MyData"
+	WHERE attrition = 'Yes'
+	GROUP BY clustering_worklifebalance
+
+/* Third query to find insight/
+
+SELECT count(attrition) as Count_attrition,case when education = '1' THEN 'Below College'
+	when education = '2' THEN 'College'
+	when education = '3' THEN 'Bachelor'
+	when education = '4' THEN 'Master'
+	when education = '5' THEN 'Doctor' END AS clustering_education
+	FROM PUBLIC."MyData"
+	WHERE attrition = 'Yes'
+	GROUP BY clustering_education
+
+/* Fourth query to find insight/
+
+WITH CTE AS 
+	(SELECT department,avg(monthlyincome) as AVG_salary, avg(performanceRating) as AVG_Performance
+	FROM PUBLIC."MyData"
+	GROUP BY department)
+SELECT CTE.department,CTE.AVG_salary,CASE WHEN AVG_Performance < 3.14 THEN 'Slightly_low_performance' 
+WHEN AVG_Performance >= 3.14 AND AVG_Performance <= 3.16 THEN 'Geranal_performance' 
+WHEN AVG_Performance > 3.16 THEN 'Good_performance' END AS Clustering_performance
+FROM CTE ;
+
+
+
+
+
