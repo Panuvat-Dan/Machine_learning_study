@@ -1,8 +1,8 @@
-# Machine_learning_study
+# Machine_learning_Attrition <IBM data-set>
 
 ## Objective
 
-To study Machine learning algorithms and concepts by doing
+To study Machine learning algorithms and concepts by exploring the IBM dataset
 
 ## Installation
 
@@ -26,4 +26,8 @@ Data gathering >> Data accessing >> Data wrangling >> Data expolratory >> Conclu
 
 ## Reflection
 
-The result of thsi project is to improve ML concept and see the relation between statistic and ML...
+The result of thsi project is to improve ML concept of linear regression and finding important features which lead to  attrition of employee
+
+## Credit 
+
+Kaggle : IBM dataset
