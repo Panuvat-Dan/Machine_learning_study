@@ -2,7 +2,7 @@
 
 ## Objective
 
-To study Machine learning algorithms and concepts by exploring the IBM dataset
+To model Machine learning algorithms by logistic regression method and do EDA the IBM employee dataset
 
 ## Installation
 
